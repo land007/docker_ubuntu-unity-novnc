@@ -60,7 +60,8 @@ RUN chmod +x /usr/bin/*
 RUN chmod +x /home/ubuntu/startup.sh
 
 EXPOSE 6080 5901 4040
-CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
+#CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
+CMD /etc/init.d/ssh start && nohup /home/ubuntu/startup.sh  > /tmp/startup.out 2>&1 & bash
 
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
