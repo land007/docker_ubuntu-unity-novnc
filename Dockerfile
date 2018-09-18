@@ -18,7 +18,8 @@ RUN apt-get update \
         metacity \
         nautilus \
         gedit \
-        xterm \
+#        xterm \
+        gnome-terminal \
         sudo
 
 # Install dependency components.
@@ -63,6 +64,9 @@ EXPOSE 6080 5901 4040
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
 CMD /etc/init.d/ssh start && nohup /home/ubuntu/startup.sh  > /tmp/startup.out 2>&1 & bash
 
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+RUN sudo apt-get update  && sudo apt-get install -y google-chrome-stable
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
