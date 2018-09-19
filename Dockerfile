@@ -60,16 +60,44 @@ COPY startup.sh $HOME
 RUN chmod +x /usr/bin/*
 RUN chmod +x /home/ubuntu/startup.sh
 
-EXPOSE 6080 5901 4040
-#CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
-CMD /etc/init.d/ssh start && nohup /home/ubuntu/startup.sh  > /tmp/startup.out 2>&1 & bash
-
+# Chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
 RUN sudo apt-get update  && sudo apt-get install -y google-chrome-stable
 
+# Install Java.
+RUN apt-get install -y software-properties-common
+RUN \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java8-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk8-installer
+
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+ENV CLASSPATH .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+ENV PATH $PATH:$JAVA_HOME/bin
+RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle' >> /etc/profile && echo 'export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar' >> /etc/profile && echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile
+# Eclipse
 RUN cd /tmp && wget http://mirror.rise.ph/eclipse//technology/epp/downloads/release/photon/R/eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz && tar -zxvf eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz -C /usr/local/ && rm -f eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz
  
+# Define working directory.
+RUN mkdir /java
+#ADD java /java
+WORKDIR /java
+RUN ln -s /java ~/
+RUN ln -s /java /home/land007
+RUN mv /java /node_
+VOLUME ["/java"]
+ADD check.sh /
+RUN sed -i 's/\r$//' /check.sh
+RUN chmod a+x /check.sh
+
+#CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
+CMD /check.sh /node ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh  > /tmp/startup.out 2>&1 & bash
+EXPOSE 6080 5901 4040
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
