@@ -66,7 +66,6 @@ RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |
 RUN sudo apt-get update  && sudo apt-get install -y google-chrome-stable
 
 # Install Java.
-RUN apt-get install -y software-properties-common
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
@@ -83,21 +82,25 @@ RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle' >> /etc/profile && echo '
 # Eclipse
 RUN cd /tmp && wget http://mirror.rise.ph/eclipse//technology/epp/downloads/release/photon/R/eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz && tar -zxvf eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz -C /usr/local/ && rm -f eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz
 ADD eclipse.desktop /usr/share/applications/eclipse.desktop
+#shadowsocks
+RUN add-apt-repository ppa:hzwhuang/ss-qt5 && \
+  apt-get update && \
+  apt-get install shadowsocks-qt5
  
 # Define working directory.
-RUN mkdir /java
-#ADD java /java
-WORKDIR /java
-RUN ln -s /java ~/
-RUN ln -s /java /home/land007
-RUN mv /java /java_
-VOLUME ["/java"]
+RUN mkdir /eclipse-workspace
+#ADD eclipse-workspace /eclipse-workspace
+WORKDIR /eclipse-workspace
+RUN ln -s /eclipse-workspace ~/
+RUN ln -s /eclipse-workspace /home/land007
+RUN mv /eclipse-workspace /eclipse-workspace_
+VOLUME ["/eclipse-workspace"]
 ADD check.sh /
 RUN sed -i 's/\r$//' /check.sh
 RUN chmod a+x /check.sh
 
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
-CMD /check.sh /java ; /etc/init.d/ssh start ; cat /home/ubuntu/password.txt ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & bash
+CMD /check.sh /eclipse-workspace ; /etc/init.d/ssh start ; cat /home/ubuntu/password.txt ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & bash
 EXPOSE 6080 5901 4040
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
