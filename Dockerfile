@@ -60,18 +60,6 @@ COPY startup.sh $HOME
 RUN chmod +x /usr/bin/*
 RUN chmod +x /home/ubuntu/startup.sh
 
-#fcitx
-RUN apt-get install -y \
-	pulseaudio \
-	fonts-droid \
-	ttf-wqy-zenhei \
-	ttf-wqy-microhei \
-	fonts-arphic-ukai \
-	fonts-arphic-uming \
-	fcitx \
-	fcitx-googlepinyin \
-	im-config 
-
 # Chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
