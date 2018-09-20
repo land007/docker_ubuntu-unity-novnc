@@ -85,7 +85,7 @@ ADD eclipse.desktop /usr/share/applications/eclipse.desktop
 #shadowsocks
 RUN add-apt-repository ppa:hzwhuang/ss-qt5 && \
   apt-get update && \
-  apt-get install shadowsocks-qt5
+  apt-get install -y shadowsocks-qt5
  
 # Define working directory.
 RUN mkdir /eclipse-workspace
