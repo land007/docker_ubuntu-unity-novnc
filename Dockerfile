@@ -86,6 +86,10 @@ ADD eclipse.desktop /usr/share/applications/eclipse.desktop
 RUN add-apt-repository ppa:hzwhuang/ss-qt5 && \
   apt-get update && \
   apt-get install -y shadowsocks-qt5
+
+# eclipse
+RUN mv /usr/local/eclipse /usr/local/eclipse_
+VOLUME ["/usr/local/eclipse"]
  
 # Define working directory.
 RUN mkdir /eclipse-workspace
@@ -100,8 +104,9 @@ RUN sed -i 's/\r$//' /check.sh
 RUN chmod a+x /check.sh
 
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
-CMD /check.sh /eclipse-workspace ; /etc/init.d/ssh start ; cat /home/ubuntu/password.txt ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & bash
+CMD /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /etc/init.d/ssh start ; cat /home/ubuntu/password.txt ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & bash
 EXPOSE 6080 5901 4040
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
+#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
