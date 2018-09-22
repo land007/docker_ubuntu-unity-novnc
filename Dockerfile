@@ -82,10 +82,6 @@ RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle' >> /etc/profile && echo '
 # Eclipse
 RUN cd /tmp && wget http://mirror.rise.ph/eclipse//technology/epp/downloads/release/photon/R/eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz && tar -zxvf eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz -C /usr/local/ && rm -f eclipse-jee-photon-R-linux-gtk-x86_64.tar.gz
 ADD eclipse.desktop /usr/share/applications/eclipse.desktop
-#shadowsocks
-RUN add-apt-repository ppa:hzwhuang/ss-qt5 && \
-  apt-get update && \
-  apt-get install -y shadowsocks-qt5
  
 # Define working directory.
 RUN mkdir /eclipse-workspace
