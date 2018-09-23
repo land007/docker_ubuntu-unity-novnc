@@ -12,9 +12,9 @@ RUN adduser $USER --disabled-password
 # Install Ubuntu Unity.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        ubuntu-desktop \
-        unity-lens-applications \
-        gnome-panel \
+#       ubuntu-desktop \
+#       unity-lens-applications \
+#       gnome-panel \
         metacity \
         nautilus \
         gedit \
@@ -31,9 +31,14 @@ RUN apt-get install -y \
         pwgen \
 #        libtasn1-3-bin \
 #        libglu1-mesa \
+		gnome-session \
+		gdm3 \
+		tasksel \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
+    
+RUN tasksel install ubuntu-desktop
 
 # Copy tigerVNC binaries
 ADD tigervnc-1.8.0.x86_64 /
