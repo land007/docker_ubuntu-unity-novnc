@@ -103,11 +103,13 @@ ADD check.sh /
 RUN sed -i 's/\r$//' /check.sh
 RUN chmod a+x /check.sh
 
-RUN sed -i "s/^ubunut:x.*/ubuntu:x:0:1000::\/home\/ubuntu:\/bin\/bash/g" /etc/passwd
+RUN sed -i "s/^ubunut:x.*/ubuntu:x:0:1001:\/home\/ubuntu:\/bin\/bash/g" /etc/passwd
+RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
 
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
 CMD /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
 EXPOSE 6080 5901 4040
+
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
