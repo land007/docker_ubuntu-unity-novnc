@@ -64,6 +64,7 @@ RUN chmod +x /home/ubuntu/startup.sh
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
 RUN sudo apt-get update  && sudo apt-get install -y google-chrome-stable
+RUN mv /home/ubuntu/.config/google-chrome/Default /home/ubuntu/.config/google-chrome/Default_
 
 # Install Java.
 RUN \
@@ -108,9 +109,10 @@ RUN chmod u+x /etc/sudoers && echo "ubuntu    ALL=(ALL:ALL) ALL" >> /etc/sudoers
 RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
 
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
-CMD /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
+CMD /check.sh /home/ubuntu/.config/google-chrome/Default ; /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
 EXPOSE 6080 5901 4040
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
+#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
