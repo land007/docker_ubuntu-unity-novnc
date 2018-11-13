@@ -104,7 +104,7 @@ VOLUME ["/eclipse-workspace"]
 ADD check.sh /
 RUN sed -i 's/\r$//' /check.sh
 RUN chmod a+x /check.sh
-RUN sed -i 's/\r$//' /java_/start.sh
+RUN sed -i 's/\r$//' /eclipse-workspace_/start.sh
 RUN chmod a+x /eclipse-workspace_/start.sh
 ADD checkOne.sh /
 RUN sed -i 's/\r$//' /checkOne.sh
@@ -134,7 +134,7 @@ ENV GitPass 123456
 
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
 #CMD /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
-CMD /checkOne.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; service codemeter start ; sleep 2 ; /java/start.sh
+CMD /checkOne.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; service codemeter start ; sleep 2 ; /eclipse-workspace/start.sh
 
 EXPOSE 6080 5901 4040 8080
 
