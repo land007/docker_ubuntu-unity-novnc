@@ -94,8 +94,8 @@ RUN mv /usr/local/eclipse /usr/local/eclipse_
 VOLUME ["/usr/local/eclipse"]
  
 # Define working directory.
-RUN mkdir /eclipse-workspace
-#ADD eclipse-workspace /eclipse-workspace
+#RUN mkdir /eclipse-workspace
+ADD eclipse-workspace /eclipse-workspace
 WORKDIR /eclipse-workspace
 RUN ln -s /eclipse-workspace ~/
 RUN ln -s /eclipse-workspace /home/land007
@@ -104,16 +104,43 @@ VOLUME ["/eclipse-workspace"]
 ADD check.sh /
 RUN sed -i 's/\r$//' /check.sh
 RUN chmod a+x /check.sh
+RUN sed -i 's/\r$//' /java_/start.sh
+RUN chmod a+x /eclipse-workspace_/start.sh
+ADD checkOne.sh /
+RUN sed -i 's/\r$//' /checkOne.sh
+RUN chmod a+x /checkOne.sh
 
 #RUN sed -i "s/^ubunut:x.*/ubuntu:x:0:1001:\/home\/ubuntu:\/bin\/bash/g" /etc/passwd
 RUN chmod u+x /etc/sudoers && echo "ubuntu    ALL=(ALL:ALL) ALL" >> /etc/sudoers && chmod u-x /etc/sudoers
 RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
 
+ADD codemeter_6.70.3152.500_amd64.deb /tmp
+RUN apt-get update && apt-get install -y libfontconfig1 libfreetype6 libice6 libsm6
+RUN dpkg -i /tmp/codemeter_6.70.3152.500_amd64.deb && rm -f /tmp/codemeter_6.70.3152.500_amd64.deb
+RUN service codemeter start && service codemeter status && cmu -l
+RUN echo '[ServerSearchList\Server1]' >> /etc/wibu/CodeMeter/Server.ini
+RUN cat /etc/wibu/CodeMeter/Server.ini
+#RUN echo 'Address=192.168.86.8' >> /etc/wibu/CodeMeter/Server.ini
+#RUN service codemeter start && service codemeter status && cmu -k
+ENV CodeMeter_Server 192.168.86.8
+
+ENV LEVEL Release
+#ENV LEVEL Test
+#ENV LEVEL Beta
+#ENV LEVEL Alpha
+ENV GitRepository 192.168.0.1/gitlab/golang-grpc.git
+ENV GitUser land007
+ENV GitPass 123456
+
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
-CMD /check.sh /home/ubuntu/.config/google-chrome/Default ; /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
-EXPOSE 6080 5901 4040
+#CMD /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
+CMD /checkOne.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; service codemeter start ; sleep 2 ; /java/start.sh
+
+EXPOSE 6080 5901 4040 8080
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 -p 2020:20022 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
+
+#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 -p 2020:20022 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=http://10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:codemeter
