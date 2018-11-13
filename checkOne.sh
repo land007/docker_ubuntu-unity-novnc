@@ -14,4 +14,5 @@ echo "git clone ${GitRepository}"
 git clone http://${GitUser}:${GitPass}@${GitRepository} /eclipse-workspace
 cp /eclipse-workspace_/start.sh /eclipse-workspace
 fi
+sudo chmod -R 777 /eclipse-workspace/
 fi
