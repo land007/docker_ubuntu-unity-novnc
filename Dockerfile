@@ -132,6 +132,11 @@ ENV GitRepository 192.168.0.1/gitlab/golang-grpc.git
 ENV GitUser land007
 ENV GitPass 123456
 
+RUN mkdir -p /home/ubuntu/.m2/repository
+VOLUME ["/home/ubuntu/.m2/repository"]
+RUN mkdir -p /home/ubuntu/.config/google-chrome/Default
+VOLUME ["/home/ubuntu/.config/google-chrome/Default"]
+
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
 #CMD /check.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
 CMD /checkOne.sh /eclipse-workspace ; /check.sh /usr/local/eclipse ; /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; service codemeter start ; sleep 2 ; /eclipse-workspace/start.sh
@@ -140,7 +145,8 @@ EXPOSE 6080 5901 4040 8080
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
-#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
-#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:4040 -p 2020:20022 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
+#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:8080 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
+#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:8080 -p 2020:20022 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
 
-#docker pull land007/ubuntu-unity-novnc:codemeter ; docker stop ubuntu-unity-novnc_codemeter ; docker rm ubuntu-unity-novnc_codemeter ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_debug:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5911:5901 -p 6080:6080 -p 4040:4040 -p 2020:20022 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc_codemeter land007/ubuntu-unity-novnc:codemeter
+#docker pull land007/ubuntu-unity-novnc:codemeter ; docker stop ubuntu-unity-novnc_codemeter ; docker rm ubuntu-unity-novnc_codemeter ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_debug:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository:/home/ubuntu/.m2/repository -p 5911:5901 -p 6080:6080 -p 4040:8080 -p 2020:20022 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc_codemeter land007/ubuntu-unity-novnc:codemeter
+#docker cp ubuntu-unity-novnc_codemeter:/home/ubuntu/.m2/repository ~/docker/m2_repository
