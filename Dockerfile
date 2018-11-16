@@ -117,9 +117,9 @@ RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-
 ADD codemeter_6.70.3152.500_amd64.deb /tmp
 RUN apt-get update && apt-get install -y libfontconfig1 libfreetype6 libice6 libsm6
 RUN dpkg -i /tmp/codemeter_6.70.3152.500_amd64.deb && rm -f /tmp/codemeter_6.70.3152.500_amd64.deb
-RUN service codemeter start && service codemeter status && cmu -l
-RUN echo '[ServerSearchList\Server1]' >> /etc/wibu/CodeMeter/Server.ini
-RUN cat /etc/wibu/CodeMeter/Server.ini
+#RUN service codemeter start && service codemeter status && cmu -l
+#RUN echo '[ServerSearchList\Server1]' >> /etc/wibu/CodeMeter/Server.ini
+#RUN cat /etc/wibu/CodeMeter/Server.ini
 #RUN echo 'Address=192.168.86.8' >> /etc/wibu/CodeMeter/Server.ini
 #RUN service codemeter start && service codemeter status && cmu -k
 ENV CodeMeter_Server 192.168.86.8
@@ -146,7 +146,23 @@ EXPOSE 6080 5901 4040 8080
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
 #docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:8080 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
-#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:8080 -p 2020:20022 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
+#docker pull land007/ubuntu-unity-novnc ; docker stop ubuntu-unity-novnc ; docker rm ubuntu-unity-novnc ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -p 5901:5901 -p 6080:6080 -p 4040:8080 -p 2020:22 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:latest
 
-#docker pull land007/ubuntu-unity-novnc:codemeter ; docker stop ubuntu-unity-novnc_codemeter ; docker rm ubuntu-unity-novnc_codemeter ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_debug:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository:/home/ubuntu/.m2/repository -p 5911:5901 -p 6080:6080 -p 4040:8080 -p 2020:20022 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc_codemeter land007/ubuntu-unity-novnc:codemeter
+#docker pull land007/ubuntu-unity-novnc:codemeter ; docker stop ubuntu-unity-novnc_codemeter ; docker rm ubuntu-unity-novnc_codemeter ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_debug:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository:/home/ubuntu/.m2/repository -p 5911:5901 -p 6080:6080 -p 4040:8080 -p 2020:22 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc_codemeter land007/ubuntu-unity-novnc:codemeter
 #docker cp ubuntu-unity-novnc_codemeter:/home/ubuntu/.m2/repository ~/docker/m2_repository
+
+#docker pull land007/ubuntu-unity-novnc:codemeter ; docker stop ubuntu-unity-novnc_codemeter ; docker rm ubuntu-unity-novnc_codemeter ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_debug:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository:/home/ubuntu/.m2/repository -p 5911:5901 -p 6080:6080 -p 4040:8080 -p 2020:22 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc_codemeter land007/ubuntu-unity-novnc:codemeter
+
+#贾轶秋
+#sudo rm -R ~/docker/eclipse-workspace_debug ; 
+#docker stop ubuntu-unity-novnc_codemeter ; docker rm ubuntu-unity-novnc_codemeter ; docker run -it -v /media/sdb1:/media/sdb1 -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_debug:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository:/home/ubuntu/.m2/repository -p 5911:5901 -p 6080:6080 -p 4040:8080 -p 2020:22 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/jd/store-face-detect-client.git" --privileged --name ubuntu-unity-novnc_codemeter land007/ubuntu-unity-novnc:codemeter
+#cp /media/sdb1/jd-ssnow.jar /media/sdb1/jd-ssnow2.jar
+#cp libAlgorithmTesoImageQualityAssessment.so /usr/lib
+#docker cp ubuntu-unity-novnc_codemeter:/eclipse-workspace/jd-ssnow/target/jd-ssnow.jar /media/sdb1/
+
+
+#温明卫
+#docker stop ubuntu-unity-novnc_codemeter_mingwei ; docker rm ubuntu-unity-novnc_codemeter_mingwei ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_mingwei:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository_mingwei:/home/ubuntu/.m2/repository -p 5211:5901 -p 6280:6080 -p 4240:8080 -p 2220:22 -e "LEVEL=Test" -e "GitUser=jiayiqiu" -e "GitPass=jiayq007" -e "GitRepository=10.2.0.10:8090/gitlab/eyecool/enp.git" --privileged --name ubuntu-unity-novnc_codemeter_mingwei land007/ubuntu-unity-novnc:codemeter
+
+#曾宪章
+#docker stop ubuntu-unity-novnc_codemeter_test ; docker rm ubuntu-unity-novnc_codemeter_test ; docker run -it -v ~/docker/chrome_default:/home/ubuntu/.config/google-chrome/Default -v ~/docker/eclipse-workspace_test:/eclipse-workspace -v ~/docker/eclipse:/usr/local/eclipse -v ~/docker/m2_repository:/home/ubuntu/.m2/repository -p 5101:5901 -p 6180:6080 -p 4140:8080 -p 2120:22 -e "LEVEL=Release" --privileged --name ubuntu-unity-novnc_codemeter_test land007/ubuntu-unity-novnc:codemeter

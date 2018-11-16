@@ -5,6 +5,7 @@ echo "${DIR} is not Empty"
 else
 echo "${DIR} is Empty"
 echo "cp -R ${DIR}_/* ${DIR}"
+echo '[ServerSearchList\Server1]' >> /etc/wibu/CodeMeter/Server.ini
 echo "Address=${CodeMeter_Server}" >> /etc/wibu/CodeMeter/Server.ini
 if [ ${LEVEL} == "Release" ]; then
 echo "cp -R ${DIR}_/* ${DIR}"
