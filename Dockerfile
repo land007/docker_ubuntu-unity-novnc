@@ -1,4 +1,4 @@
-FROM land007/ubuntu:16.04
+FROM land007/ubuntu:latest
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
