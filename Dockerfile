@@ -1,4 +1,4 @@
-FROM land007/cpp-boost:16.04
+FROM land007/ubuntu:16.04
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
