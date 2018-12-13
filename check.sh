@@ -7,3 +7,4 @@ echo "${DIR} is Empty"
 echo "cp -R ${DIR}_ ${DIR}"
 cp -R ${DIR}_/* ${DIR}
 fi
+chmod -R 777 ${DIR}
