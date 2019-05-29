@@ -80,7 +80,9 @@ RUN chmod a+x /check.sh
 RUN chmod u+x /etc/sudoers && echo "ubuntu    ALL=(ALL:ALL) ALL" >> /etc/sudoers && chmod u-x /etc/sudoers
 RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
 
+RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times
 RUN echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time
+RUN echo "land007/ubuntu-unity-novnc" >> /.image_names
 RUN echo "land007/ubuntu-unity-novnc" > /.image_name
 
 EXPOSE 6080 5901 4040
