@@ -91,7 +91,7 @@ EXPOSE 6080 5901 4040
 RUN echo "/check.sh /home/ubuntu/.config/google-chrome/Default" >> /start.sh
 RUN echo "nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 &" >> /start.sh
 RUN echo "sleep 2" >> /start.sh
-RUN echo "cat /home/ubuntu/password.txt" >> /start.sh
+RUN echo "cat /home/ubuntu/password.txt || true" >> /start.sh
 
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
