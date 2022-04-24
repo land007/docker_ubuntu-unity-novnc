@@ -1,5 +1,7 @@
 # docker_ubuntu-unity-novnc
 
+![image](https://github.com/land007/docker_ubuntu-unity-novnc/raw/master/1101650796708_.pic.jpg)
+
 Docker uses the Ubuntu20.04 Unity desktop, and the startup command to set the password is as follows.
 
 
@@ -19,5 +21,3 @@ sudo docker rm -f ubuntu-unity-novnc; sudo docker run -it -p 5901:5901 -p 6080:6
 #View password
 sudo docker exec ubuntu-unity-novnc cat /home/ubuntu/password.txt
 ```
-
-![image](https://github.com/land007/docker_ubuntu-unity-novnc/raw/master/1101650796708_.pic.jpg)
