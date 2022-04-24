@@ -11,7 +11,7 @@ sudo docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 -e PASSWORD=123456 --
 
 Visit http://127.0.0.1:6080/vnc.html in your browser,
 
-After booting, you can remotely display the following address. The password is 123456. This 123456 is the VNC connection 123456 and the ubuntu password.
+After booting, you can remotely display the following address. The password is 123456. This password is the VNC connection and the ubuntu password.
 
 You can also use a random password as follows.
 
