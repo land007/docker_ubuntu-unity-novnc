@@ -95,7 +95,7 @@ RUN echo "export LD_PRELOAD=/lib/$(uname -m)-linux-gnu/libgcc_s.so.1" >> /start.
 	echo "nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 &" >> /start.sh && \
 	echo "sleep 2" >> /start.sh && \
 	echo "cat /home/ubuntu/password.txt || true" >> /start.sh && \
-	echo "killall -9 vncconfig" >> /start.sh && \
+	echo "killall -9 vncconfig" >> /start.sh
 #RUN apt-get install --no-install-recommends -y xterm ubuntu-unity-desktop
 #RUN apt-get install -y xterm ubuntu-unity-desktop
 
