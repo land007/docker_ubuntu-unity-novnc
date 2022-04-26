@@ -82,20 +82,20 @@ RUN chmod a+x /check.sh
 RUN chmod u+x /etc/sudoers && echo "ubuntu    ALL=(ALL:ALL) ALL" >> /etc/sudoers && chmod u-x /etc/sudoers
 #RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
 
-RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times
-RUN echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time
-RUN echo "land007/ubuntu-unity-novnc" >> /.image_names
-RUN echo "land007/ubuntu-unity-novnc" > /.image_name
+RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times && \
+	echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time && \
+	echo "land007/ubuntu-unity-novnc" >> /.image_names && \
+	echo "land007/ubuntu-unity-novnc" > /.image_name
 
 EXPOSE 6080 5901 4040
 #CMD ["/bin/bash", "/home/ubuntu/startup.sh"]
 #CMD /check.sh /home/ubuntu/.config/google-chrome/Default ; /etc/init.d/ssh start ; nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 & sleep 2 ; cat /home/ubuntu/password.txt ; bash
 #RUN echo "/check.sh /home/ubuntu/.config/google-chrome/Default" >> /start.sh
-RUN echo "export LD_PRELOAD=/lib/$(uname -m)-linux-gnu/libgcc_s.so.1" >> /start.sh
-RUN echo "nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 &" >> /start.sh
-RUN echo "sleep 2" >> /start.sh
-RUN echo "cat /home/ubuntu/password.txt || true" >> /start.sh
-RUN echo "killall -9 vncconfig" >> /start.sh
+RUN echo "export LD_PRELOAD=/lib/$(uname -m)-linux-gnu/libgcc_s.so.1" >> /start.sh && \
+	echo "nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 &" >> /start.sh && \
+	echo "sleep 2" >> /start.sh && \
+	echo "cat /home/ubuntu/password.txt || true" >> /start.sh && \
+	echo "killall -9 vncconfig" >> /start.sh && \
 #RUN apt-get install --no-install-recommends -y xterm ubuntu-unity-desktop
 #RUN apt-get install -y xterm ubuntu-unity-desktop
 
