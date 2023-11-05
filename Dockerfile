@@ -125,3 +125,4 @@ RUN echo "export LD_PRELOAD=/lib/$(uname -m)-linux-gnu/libgcc_s.so.1" >> /start.
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
 #docker rm -f ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:20.04
+
