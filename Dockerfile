@@ -1,4 +1,4 @@
-FROM land007/ubuntu:20.04
+FROM land007/ubuntu:22.04
 
 MAINTAINER Yiqiu Jia <yiqiujia@hotmail.com>
 
@@ -34,7 +34,8 @@ RUN apt-get install -y \
         tigervnc-standalone-server \
         tigervnc-xorg-extension \
         tigervnc-viewer \
-        ubuntu-unity-desktop
+        ubuntu-unity-desktop \
+        dbus-x11
 #    && apt-get autoclean \
 #    && apt-get autoremove \
 #    && rm -rf /var/lib/apt/lists/*
@@ -81,6 +82,12 @@ RUN chmod a+x /check.sh
 #RUN sed -i "s/^ubunut:x.*/ubuntu:x:0:1001:\/home\/ubuntu:\/bin\/bash/g" /etc/passwd
 RUN chmod u+x /etc/sudoers && echo "ubuntu    ALL=(ALL:ALL) ALL" >> /etc/sudoers && chmod u-x /etc/sudoers
 #RUN apt install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
+RUN apt-get install -y fcitx fcitx-googlepinyin fcitx-table-wbpy fcitx-pinyin fcitx-sunpinyin
+
+# 设置环境变量，指定fcitx为默认输入法框架
+ENV GTK_IM_MODULE=fcitx
+ENV QT_IM_MODULE=fcitx
+ENV XMODIFIERS=@im=fcitx
 
 RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times && \
 	echo $(date "+%Y-%m-%d_%H:%M:%S") > /.image_time && \
@@ -95,7 +102,8 @@ RUN echo "export LD_PRELOAD=/lib/$(uname -m)-linux-gnu/libgcc_s.so.1" >> /start.
 	echo "nohup /home/ubuntu/startup.sh > /tmp/startup.out 2>&1 &" >> /start.sh && \
 	echo "sleep 2" >> /start.sh && \
 	echo "cat /home/ubuntu/password.txt || true" >> /start.sh && \
-	echo "killall -9 vncconfig" >> /start.sh
+	echo "killall -9 vncconfig" >> /start.sh && \
+    echo "nohup fcitx -d > /tmp/fcitx.out 2>&1 &" >> /start.sh
 #RUN apt-get install --no-install-recommends -y xterm ubuntu-unity-desktop
 #RUN apt-get install -y xterm ubuntu-unity-desktop
 
@@ -105,10 +113,10 @@ RUN echo "export LD_PRELOAD=/lib/$(uname -m)-linux-gnu/libgcc_s.so.1" >> /start.
 #ADD deb /tmp
 #RUN dpkg -i /tmp/*.deb && rm -f /tmp/*.deb
 
-#docker build -t land007/ubuntu-unity-novnc:20.04 .
-#> docker buildx build --platform linux/amd64,linux/arm64/v8,linux/arm/v7 -t land007/ubuntu-unity-novnc:20.04 --push .
+#docker build -t land007/ubuntu-unity-novnc:22.04 .
+#> docker buildx build --platform linux/amd64,linux/arm64/v8,linux/arm/v7 -t land007/ubuntu-unity-novnc:22.04 --push .
 #> docker buildx build --platform linux/amd64,linux/arm64/v8 -t land007/ubuntu-unity-novnc:20.04 --push .
 #> docker pull --platform=linux/amd64 land007/ubuntu-unity-novnc:20.04
 
 #sudo docker exec $CONTAINER_ID cat /home/ubuntu/password.txt
-#docker rm -f ubuntu-unity-novnc ; docker run -it -p 5901:5901 -p 6080:6080 -p 4040:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:20.04
+#docker rm -f ubuntu-unity-novnc ; docker run -it -p 5903:5901 -p 6083:6080 -p 4043:4040 --privileged --name ubuntu-unity-novnc land007/ubuntu-unity-novnc:22.04
